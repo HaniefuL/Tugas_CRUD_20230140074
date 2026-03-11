@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @Table(name = "ktp")
@@ -15,4 +17,9 @@ public class Ktp {
     @NotBlank(message = "Nomor KTP wajib diisi")
     @Column(unique = true)
     private String nomorKtp;
+
+    private String namaLengkap;
+    private String alamat;
+    private LocalDate tanggalLahir;
+    private String jenisKelamin;
 }

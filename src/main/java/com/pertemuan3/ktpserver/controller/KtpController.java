@@ -15,4 +15,11 @@ public class KtpController {
     public Ktp create(@RequestBody Ktp ktp) {
         return ktpService.createKtp(ktp);
     }
+
+    @GetMapping
+    public List<Ktp> getAll() {
+        return ktpService.getAllKtp();
+    }
+
+
 }

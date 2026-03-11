@@ -25,4 +25,10 @@ public class KtpController {
     public Ktp getById(@PathVariable Integer id) {
         return ktpService.getKtpById(id);
     }
+
+    @PutMapping("/{id}")
+    public Ktp update(@PathVariable Integer id, @RequestBody Ktp ktp) {
+        return ktpService.updateKtp(id, ktp);
+    }
+
 }

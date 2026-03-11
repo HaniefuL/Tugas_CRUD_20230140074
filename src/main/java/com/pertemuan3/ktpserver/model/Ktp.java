@@ -7,5 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name = "ktp")
 public class Ktp {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 }

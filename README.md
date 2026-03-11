@@ -1,7 +1,7 @@
 Tugas 1: Membuat Program di Server dengan API untuk CRUD KTP menggunakan Spring Boot dan MySQL
 Dokumentasikan API dan screenshot tampilan website ke dalam Readme
 - Screenshot Tampilan Website: 
-![img.png](img.png)
+![img_6.png](img_6.png)
 
 - POST /ktp: Untuk menambah data KTP baru.
 ![img_2.png](img_2.png)

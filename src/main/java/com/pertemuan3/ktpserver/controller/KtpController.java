@@ -1,7 +1,11 @@
 package com.pertemuan3.ktpserver.controller;
 
+import com.pertemuan3.ktpserver.model.Ktp;
+import com.pertemuan3.ktpserver.service.KtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController

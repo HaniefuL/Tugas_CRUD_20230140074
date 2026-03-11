@@ -1,0 +1,108 @@
+index
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Data KTP | Server API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 50px; }
+        .card { border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .table-hover tbody tr:hover { background-color: #f1f4f9; }
+        .header-section { margin-bottom: 30px; text-align: center; }
+        .badge-gender { font-size: 0.85em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <h1 class="display-5 fw-bold text-primary">Sistem Informasi KTP</h1>
+        <p class="text-muted">Manajemen data kependudukan melalui Spring Boot REST API</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">Daftar Penduduk</h5>
+            <button onclick="fetchKtp()" class="btn btn-primary btn-sm">Refresh Data</button>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="ktpTable">
+                    <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">ID</th>
+                        <th>Nomor KTP (NIK)</th>
+                        <th>Nama Lengkap</th>
+                        <th>Alamat</th>
+                        <th>Tanggal Lahir</th>
+                        <th>L/P</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="loading" class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 text-center text-muted">
+        <small>&copy; 2026 Tugas 1 - Spring Boot MySQL CRUD</small>
+    </footer>
+</div>
+
+<script>
+    // Sesuaikan dengan endpoint Controller kamu (/ktp atau /api/ktp)
+    const apiUrl = '/ktp';
+
+    async function fetchKtp() {
+        const tableBody = document.querySelector('#ktpTable tbody');
+        const loader = document.getElementById('loading');
+
+        loader.style.display = 'block';
+        tableBody.innerHTML = '';
+
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            loader.style.display = 'none';
+
+            if (data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada data di database.</td></tr>`;
+                return;
+            }
+
+            data.forEach(ktp => {
+                const genderBadge = ktp.jenisKelamin.toLowerCase().includes('laki') ? 'bg-info' : 'bg-danger';
+                const row = `
+                    <tr>
+                        <td class="ps-4 text-muted">#${ktp.id}</td>
+                        <td><strong>${ktp.nomorKtp}</strong></td>
+                        <td>${ktp.namaLengkap}</td>
+                        <td>${ktp.alamat}</td>
+                        <td>${ktp.tanggalLahir}</td>
+                        <td><span class="badge ${genderBadge} badge-gender">${ktp.jenisKelamin}</span></td>
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
+        } catch (error) {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-danger">Gagal terhubung ke server API!</td></tr>`;
+        }
+    }
+
+    // Jalankan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', fetchKtp);
+</script>
+
+</body>
+</html>

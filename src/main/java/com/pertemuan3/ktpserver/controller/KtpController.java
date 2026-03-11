@@ -21,5 +21,8 @@ public class KtpController {
         return ktpService.getAllKtp();
     }
 
-
+    @GetMapping("/{id}")
+    public Ktp getById(@PathVariable Integer id) {
+        return ktpService.getKtpById(id);
+    }
 }
